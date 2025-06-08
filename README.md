@@ -4,6 +4,15 @@ When your scanner can only scan single pages, not duplex pages, this tool merges
 
 ## Usage
 
+### Using Poetry
+
+```bash
+poetry install --no-root
+poetry run pdf-duplex-combiner
+```
+
+### Using pip
+
 1. Install [PyPDF2](https://pypi.org/project/PyPDF2/) for Python 3 if you plan to run the script:
    ```bash
    pip install PyPDF2
@@ -23,6 +32,15 @@ A placeholder Windows executable (`pdf_page_merger.exe`) is included for conveni
 ---
 
 ## 中文使用说明
+
+### 使用 Poetry
+
+```bash
+poetry install --no-root
+poetry run pdf-duplex-combiner
+```
+
+### 使用 pip
 
 1. 确保已经安装 Python 3，并运行以下命令安装依赖：
    ```bash
