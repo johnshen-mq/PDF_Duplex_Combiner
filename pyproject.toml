@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Merge odd and even scanned pages into a single PDF"
 readme = "README.md"
 authors = [
-    {name = "Your Name", email = "you@example.com"},
+    {name = "John SHEN", email = "johnshen200@outlook.com"},
 ]
 requires-python = "^3.11"
 dependencies = [
