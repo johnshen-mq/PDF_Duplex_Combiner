@@ -1,2 +1,2 @@
 # PDF_Duplex_Combiner
-When you scanner can only scan single page, not doplex page. this software combines (shuffles) your odd pages and even pages into one pdf
+When your scanner can only scan single pages, not duplex pages, this software combines (shuffles) your odd pages and even pages into one PDF
