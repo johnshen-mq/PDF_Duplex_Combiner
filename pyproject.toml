@@ -1,0 +1,19 @@
+[project]
+name = "pdf-duplex-combiner"
+version = "0.1.0"
+description = "Merge odd and even scanned pages into a single PDF"
+readme = "README.md"
+authors = [
+    {name = "Your Name", email = "you@example.com"},
+]
+requires-python = "^3.11"
+dependencies = [
+    "PyPDF2>=3.0",
+]
+
+[project.scripts]
+pdf-duplex-combiner = "main:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
