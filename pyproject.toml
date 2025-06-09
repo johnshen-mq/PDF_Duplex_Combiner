@@ -6,9 +6,10 @@ readme = "README.md"
 authors = [
     {name = "John SHEN", email = "johnshen200@outlook.com"},
 ]
-requires-python = "^3.11"
+requires-python = ">=3.11,<3.14"
 dependencies = [
     "PyPDF2>=3.0",
+    "pyinstaller (>=6.14.1,<7.0.0)",
 ]
 
 [project.scripts]
