@@ -46,7 +46,9 @@ poetry run pdf-duplex-combiner-gui  # Launch the GUI
 
 ### Windows executable
 
-A placeholder Windows executable (`pdf_page_merger.exe`) is included for convenience. It cannot be run directly because PyInstaller could not be used in this environment. If you need a real executable, install PyInstaller and build it from `main.py`.
+You can build your own .exe file by running this command in terminal, or download from release.
+pyinstaller --onefile --windowed --name pdf_duplex_combiner gui.py
+
 
 ---
 
@@ -78,4 +80,5 @@ poetry run pdf-duplex-combiner-gui  # 启动图形界面
 4. 输入偶数页（通常是反向扫描）的 PDF 路径。
 5. 输入合并后输出文件的名称。
 
-`pdf_page_merger.exe` 文件仅为占位符，如需可执行文件，请自行使用 PyInstaller 打包。
+运行以下terminal指令来打包.exe文件，或者从release下载
+pyinstaller --onefile --windowed --name pdf_duplex_combiner gui.py
