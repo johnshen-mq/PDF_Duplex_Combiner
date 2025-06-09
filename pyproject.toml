@@ -13,6 +13,7 @@ dependencies = [
 
 [project.scripts]
 pdf-duplex-combiner = "main:main"
+pdf-duplex-combiner-gui = "gui:main"
 
 [build-system]
 requires = ["poetry-core"]
