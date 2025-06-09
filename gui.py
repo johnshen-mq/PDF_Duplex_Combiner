@@ -5,6 +5,41 @@ from tkinter import filedialog, messagebox
 from main import merge_pdfs
 
 
+class Tooltip:
+    """Simple tooltip implementation for Tkinter widgets."""
+
+    def __init__(self, widget: tk.Widget, text: str) -> None:
+        self.widget = widget
+        self.text = text
+        self.tip_window: tk.Toplevel | None = None
+        widget.bind("<Enter>", self.show)
+        widget.bind("<Leave>", self.hide)
+
+    def show(self, _event=None) -> None:
+        if self.tip_window:
+            return
+        x = self.widget.winfo_rootx() + self.widget.winfo_width() + 5
+        y = self.widget.winfo_rooty() + 5
+        self.tip_window = tw = tk.Toplevel(self.widget)
+        tw.wm_overrideredirect(True)
+        tw.wm_geometry(f"+{x}+{y}")
+        label = tk.Label(
+            tw,
+            text=self.text,
+            justify="left",
+            background="#ffffe0",
+            relief="solid",
+            borderwidth=1,
+            font=("Helvetica", 9),
+        )
+        label.pack(ipadx=1)
+
+    def hide(self, _event=None) -> None:
+        if self.tip_window:
+            self.tip_window.destroy()
+            self.tip_window = None
+
+
 class PDFCombinerGUI:
     def __init__(self, root: tk.Tk) -> None:
         self.root = root
@@ -12,6 +47,30 @@ class PDFCombinerGUI:
 
         self.odd_file: str | None = None
         self.even_file: str | None = None
+
+        # Help information
+        info_frame = tk.Frame(root)
+        info_frame.pack(pady=5)
+        tk.Label(info_frame, text="How to use (使用说明)").pack(side=tk.LEFT)
+        info_icon = tk.Label(
+            info_frame,
+            text="?",
+            fg="blue",
+            font=("Helvetica", 14, "bold"),
+            cursor="question_arrow",
+        )
+        info_icon.pack(side=tk.LEFT)
+        Tooltip(
+            info_icon,
+            (
+                "1. Place pages face up and scan to odd.pdf.\n"
+                "2. Flip the stack (backs up) and scan again to even.pdf.\n"
+                "3. Load both PDFs here to merge.\n\n"
+                "1. 将文件正面朝上单面扫描保存为 odd.pdf。\n"
+                "2. 把整叠纸翻面再次扫描保存为 even.pdf。\n"
+                "3. 在此工具合并两份 PDF。"
+            ),
+        )
 
         # Odd file selection
         frame_odd = tk.Frame(root)
