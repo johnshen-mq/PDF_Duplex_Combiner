@@ -79,7 +79,8 @@ class PDFCombinerGUI:
         odd_top.pack()
         self.odd_btn = tk.Button(odd_top, text="Select Odd Pages PDF", command=self.select_odd)
         self.odd_btn.pack(side=tk.LEFT)
-        odd_canvas = tk.Canvas(odd_top, width=80, height=70, highlightthickness=0)
+        # Make the icon canvas a bit larger so numbers aren't clipped
+        odd_canvas = tk.Canvas(odd_top, width=140, height=140, highlightthickness=0)
         odd_canvas.pack(side=tk.LEFT, padx=5)
         self.draw_icon(odd_canvas, [1, 3, 5])
         self.odd_label = tk.Label(frame_odd, text="")
@@ -92,7 +93,7 @@ class PDFCombinerGUI:
         even_top.pack()
         self.even_btn = tk.Button(even_top, text="Select Even Pages PDF", command=self.select_even)
         self.even_btn.pack(side=tk.LEFT)
-        even_canvas = tk.Canvas(even_top, width=80, height=70, highlightthickness=0)
+        even_canvas = tk.Canvas(even_top, width=140, height=140, highlightthickness=0)
         even_canvas.pack(side=tk.LEFT, padx=5)
         self.draw_icon(even_canvas, [6, 4, 2])
         self.even_label = tk.Label(frame_even, text="")
@@ -113,19 +114,35 @@ class PDFCombinerGUI:
         self.root.after(500, self.cycle_rainbow)
 
     def draw_icon(self, canvas: tk.Canvas, numbers: list[int]) -> None:
-        """Draw overlapping page icon with given numbers."""
-        width, height = 50, 60
-        offset = 8
-        for idx, num in enumerate(numbers[::-1]):  # draw bottom first
-            x = offset * idx
-            y = offset * (len(numbers) - idx - 1)
-            canvas.create_rectangle(x, y, x + width, y + height, fill="white", outline="black")
+        """Draw a stack of pages where each page's number is visible.
+
+        We draw bottom → top. Each higher page shifts up-left so the
+        bottom-right corner of the pages underneath remains exposed.
+        This makes a stack like 1,3,5 (odd) and 6,4,2 (even) clearly visible.
+        """
+        # Bigger pages and more separation so lower-page corners are visible
+        width, height = 70, 90
+        offset = 16
+
+        layers = len(numbers)
+        for idx, num in enumerate(numbers[::-1]):  # bottom first
+            # Shift each successive page up-left to reveal the bottom-right
+            # corners (where we place the number) of the pages below.
+            shift = offset * (layers - idx - 1)
+            x = shift
+            y = shift
+
+            canvas.create_rectangle(
+                x, y, x + width, y + height, fill="white", outline="black"
+            )
+            # Place the number centered in the exposed bottom-right corner
+            # so numbers on lower pages aren't covered by upper pages.
             canvas.create_text(
-                x + width - 5,
-                y + height - 5,
+                x + width - offset / 2,
+                y + height - offset / 2,
                 text=str(num),
-                font=("Helvetica", 12, "bold"),
-                anchor="se",
+                font=("Helvetica", 14, "bold"),
+                anchor="center",
             )
 
     def select_odd(self) -> None:
